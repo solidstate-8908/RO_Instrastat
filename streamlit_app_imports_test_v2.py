@@ -168,8 +168,8 @@ xml_admin_file = st.file_uploader("Upload the XML Admin Excel File", type="xlsx"
 input_excel_file = st.file_uploader("Upload the Input Excel File", type="xlsx")
 
 # Output File Name
-exports_output_fname = st.text_input("Enter the Exports XML File Name including .xml at the end", "exports_intrastat_output.xml")
-imports_output_fname = st.text_input("Enter the Imports XML File Name including .xml at the end", "imports_intrastat_output.xml")
+exports_output_fname = "exports_intrastat_output.xml"
+imports_output_fname = "imports_intrastat_output.xml"
 
 if st.button("Generate XML"):
     if xml_admin_file and input_excel_file:
@@ -183,7 +183,6 @@ if st.button("Generate XML"):
                 f.write(exports_xml_content)
             with open(imports_output_fname, "w", encoding="utf-8") as f:
                 f.write(imports_xml_content)
-            st.success(f"XML files '{exports_output_fname}' & '{imports_output_fname}' generated successfully!")
 
             # Create ZIP in memory
             zip_buffer = io.BytesIO()
@@ -192,7 +191,7 @@ if st.button("Generate XML"):
                 zip_file.writestr(imports_output_fname, imports_xml_content)
 
             zip_buffer.seek(0)
-
+            st.success("XML files generated successfully!")
             # Provide single download button for ZIP
             st.download_button(
                 label="Download Both XML Files as ZIP",
@@ -200,7 +199,6 @@ if st.button("Generate XML"):
                 file_name="xml_files.zip",
                 mime="application/zip"
             )
-
 
         except Exception as e:
             st.error(f"An error occurred: {e}")
