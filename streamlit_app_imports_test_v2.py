@@ -171,7 +171,7 @@ input_excel_file = st.file_uploader("Upload the Input Excel File", type="xlsx")
 exports_output_fname = "exports_intrastat_output.xml"
 imports_output_fname = "imports_intrastat_output.xml"
 
-if st.button("Generate XML"):
+if st.button("Generate XML files"):
     if xml_admin_file and input_excel_file:
         try:
             # Generate XML files
@@ -194,9 +194,9 @@ if st.button("Generate XML"):
             st.success("XML files generated successfully!")
             # Provide single download button for ZIP
             st.download_button(
-                label="Download Both XML Files as ZIP",
+                label="Download XML Files as ZIP",
                 data=zip_buffer,
-                file_name="xml_files.zip",
+                file_name="intrastat_xml_files.zip",
                 mime="application/zip"
             )
 
