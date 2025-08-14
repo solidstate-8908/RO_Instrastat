@@ -168,8 +168,8 @@ xml_admin_file = st.file_uploader("Upload the XML Admin Excel File", type="xlsx"
 input_excel_file = st.file_uploader("Upload the Input Excel File", type="xlsx")
 
 # Output File Name
-exports_output_fname = "exports_intrastat_output.xml"
-imports_output_fname = "imports_intrastat_output.xml"
+exports_output_fname = st.text_input("Enter the exports XML File Name including .xml at the end", "exports_intrastat_output.xml")
+imports_output_fname = st.text_input("Enter the imports XML File Name including .xml at the end", "imports_intrastat_output.xml")
 
 if st.button("Generate XML files"):
     if xml_admin_file and input_excel_file:
