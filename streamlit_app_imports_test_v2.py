@@ -183,29 +183,33 @@ if st.button("Generate XML"):
                 f.write(imports_xml_content)
             st.success(f"XML files '{exports_output_fname}' & '{imports_output_fname}' generated successfully!")
 
+            # Read files into memory
+            with open(exports_output_fname, "rb") as f:
+                exports_data = f.read()
+            with open(imports_output_fname, "rb") as f:
+                imports_data = f.read()
+
             # Display download buttons side by side
             col1, col2 = st.columns(2)
 
             with col1:
-                with open(exports_output_fname, "rb") as f:
-                    st.download_button(
-                        label="Download exports XML File",
-                        data=f,
-                        file_name=exports_output_fname,
-                        mime="application/xml"
-                    )
+                st.download_button(
+                    label="Download exports XML File",
+                    data=exports_data,
+                    file_name=exports_output_fname,
+                    mime="application/xml"
+                )
 
             with col2:
-                with open(imports_output_fname, "rb") as f:
-                    st.download_button(
-                        label="Download imports XML File",
-                        data=f,
-                        file_name=imports_output_fname,
-                        mime="application/xml"
-                    )
+                st.download_button(
+                    label="Download imports XML File",
+                    data=imports_data,
+                    file_name=imports_output_fname,
+                    mime="application/xml"
+                )
 
-        
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
         st.warning("Please upload both Excel files.")
+
