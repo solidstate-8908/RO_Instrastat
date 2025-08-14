@@ -183,30 +183,22 @@ if st.button("Generate XML"):
                 f.write(imports_xml_content)
             st.success(f"XML files '{exports_output_fname}' & '{imports_output_fname}' generated successfully!")
 
-            # Read files into memory
-            with open(exports_output_fname, "rb") as f:
-                exports_data = f.read()
-            with open(imports_output_fname, "rb") as f:
-                imports_data = f.read()
+            # Create ZIP in memory
+            zip_buffer = io.BytesIO()
+            with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+                zip_file.writestr(exports_output_fname, exports_xml_content)
+                zip_file.writestr(imports_output_fname, imports_xml_content)
 
-            # Display download buttons side by side
-            col1, col2 = st.columns(2)
+            zip_buffer.seek(0)
 
-            with col1:
-                st.download_button(
-                    label="Download exports XML File",
-                    data=exports_data,
-                    file_name=exports_output_fname,
-                    mime="application/xml"
-                )
+            # Provide single download button for ZIP
+            st.download_button(
+                label="Download Both XML Files as ZIP",
+                data=zip_buffer,
+                file_name="xml_files.zip",
+                mime="application/zip"
+            )
 
-            with col2:
-                st.download_button(
-                    label="Download imports XML File",
-                    data=imports_data,
-                    file_name=imports_output_fname,
-                    mime="application/xml"
-                )
 
         except Exception as e:
             st.error(f"An error occurred: {e}")
